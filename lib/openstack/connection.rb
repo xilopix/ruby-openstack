@@ -597,7 +597,7 @@ class Connection
             # Select endpoint based on region
             if connection.region
               endpoints.each do |ep|
-                if ep["region"] and ep["region"].upcase == connection.region.upcase
+                if ep["region_id"] and ep["region_id"].upcase == connection.region.upcase
                   @uri = URI.parse(ep['url'])
                 end
               end
