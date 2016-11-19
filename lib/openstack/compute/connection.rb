@@ -130,6 +130,15 @@ module Compute
       server
     end
 
+    #
+    # delete server even if the object can't be instantiate
+    #
+    def delete_server(id)
+      response = @compute.connection.csreq("DELETE",@connection.service_host,"#{@connection.service_path}/servers/#{URI.encode(id.to_s)}",@connection.service_port,@connection.service_scheme)
+      OpenStack::Exception.raise_exception(response) unless response.code.match(/^20.$/)
+      true
+    end
+
     # Returns an array of hashes listing available server images that you have access too,
     # including stock OpenStack Compute images and any that you have created.  The "id" key
     # in the hash can be used where imageRef is required. You can also provide :limit and
