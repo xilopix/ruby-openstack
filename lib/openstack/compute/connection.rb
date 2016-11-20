@@ -134,7 +134,7 @@ module Compute
     # delete server even if the object can't be instantiate
     #
     def delete_server(id)
-      response = @compute.connection.csreq("DELETE",@connection.service_host,"#{@connection.service_path}/servers/#{URI.encode(id.to_s)}",@connection.service_port,@connection.service_scheme)
+      response = @connection.csreq("DELETE",@connection.service_host,"#{@connection.service_path}/servers/#{URI.encode(id.to_s)}",@connection.service_port,@connection.service_scheme)
       OpenStack::Exception.raise_exception(response) unless response.code.match(/^20.$/)
       true
     end
