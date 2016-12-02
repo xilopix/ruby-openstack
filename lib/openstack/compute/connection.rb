@@ -139,6 +139,17 @@ module Compute
       true
     end
 
+    #
+    # rebuild server even if the object can't be instantiate
+    #
+    def rebuild_server(id, options)
+      options[:personality] = Personalities.get_personality(options[:personality])
+      json = JSON.generate(:rebuild => options)
+      response = @connection.req('POST', "/servers/#{id}/action", :data => json)
+      OpenStack::Exception.raise_exception(response) unless response.code.match(/^20.$/)
+      true
+    end
+
     # Returns an array of hashes listing available server images that you have access too,
     # including stock OpenStack Compute images and any that you have created.  The "id" key
     # in the hash can be used where imageRef is required. You can also provide :limit and
