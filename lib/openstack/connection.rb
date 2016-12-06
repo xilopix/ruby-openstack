@@ -410,6 +410,8 @@ class Connection
         auth_data = JSON.generate({ "auth" =>  { "passwordCredentials" => { "username" => connection.authuser, "password" => connection.authkey }, connection.authtenant[:type] => connection.authtenant[:value]}})
       when "rax-kskey"
         auth_data = JSON.generate({"auth" => {"RAX-KSKEY:apiKeyCredentials" => {"username" => connection.authuser, "apiKey" => connection.authkey}}})
+      when "token"
+        auth_data = JSON.generate({"auth" => { "tenantName" => connection.authtenant[:value], "token" => { "id" => connection.authkey }}})
       when "key"
         auth_data = JSON.generate({"auth" => { "apiAccessKeyCredentials" => {"accessKey" => connection.authuser, "secretKey" => connection.authkey}, connection.authtenant[:type] => connection.authtenant[:value]}})
       else
